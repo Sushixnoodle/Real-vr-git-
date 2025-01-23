@@ -854,8 +854,8 @@ PlayerSettings:
   apiCompatibilityLevelPerPlatform: {}
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
-  metroPackageName: Real VR
-  metroPackageVersion: 
+  metroPackageName: RealVR
+  metroPackageVersion: 1.0.0.0
   metroCertificatePath: 
   metroCertificatePassword: 
   metroCertificateSubject: 
@@ -863,7 +863,7 @@ PlayerSettings:
   metroCertificateNotAfter: 0000000000000000
   metroApplicationDescription: Real VR
   wsaImages: {}
-  metroTileShortName: 
+  metroTileShortName: Real VR
   metroTileShowName: 0
   metroMediumTileShowName: 0
   metroLargeTileShowName: 0
