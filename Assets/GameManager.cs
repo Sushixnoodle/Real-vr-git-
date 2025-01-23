@@ -1,27 +1,63 @@
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement;
-using TMPro;
+using UnityEngine.UI; // For Button and UI interactions
+using TMPro;          // For TextMeshPro
+using UnityEngine.SceneManagement; // For scene loading
 
 public class GameManager : MonoBehaviour
 {
-    public TextMeshProUGUI timerText;
-    public GameObject[] bowls;
-    public GameObject marblePrefab;
-    public Transform marbleSpawnArea;
-    public int[] correctMarbleCounts; // Number of marbles for each bowl
-    private int[] playerMarbleCounts; // Player's input
-    private float timer = 90f;
+    // Singleton instance
+    public static GameManager Instance { get; private set; }
+
+    // Timer and gameplay variables
+    public TextMeshProUGUI timerText; // Timer display
+    public float levelTime = 30f;     // Total time for the level
+    private float timer;
     private bool isGameActive = false;
+
+    // Bowl and marble variables
+    public GameObject[] bowls;        // Array of bowl objects
+    public GameObject marblePrefab;   // Prefab for the marble
+    public Transform marbleSpawnArea; // Area where marbles will spawn
+    public int[] correctMarbleCounts; // Target marble counts for each bowl
+    private int[] playerMarbleCounts; // Player's marble counts for each bowl
+
+    // Success UI variables
+    public GameObject successUI;            // UI to show when the player wins
+    public TextMeshProUGUI successMessage;  // Text to display success message
+    public Button nextLevelButton;          // Button to go to the next level
+
+    void Awake()
+    {
+        // Singleton implementation
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject); // Destroy duplicate GameManager
+            return;
+        }
+        Instance = this;
+    }
 
     void Start()
     {
+        // Initialize variables
         playerMarbleCounts = new int[bowls.Length];
+        timer = levelTime;
+
+        // Ensure success UI is hidden initially
+        if (successUI != null)
+            successUI.SetActive(false);
+
+        // Attach button functionality
+        if (nextLevelButton != null)
+            nextLevelButton.onClick.AddListener(GoToNextLevel);
+
+        // Start the game
         StartGame();
     }
 
     void Update()
     {
+        // Update timer during active gameplay
         if (isGameActive)
         {
             timer -= Time.deltaTime;
@@ -29,30 +65,58 @@ public class GameManager : MonoBehaviour
 
             if (timer <= 0)
             {
-                EndGame(false); // Time's up
+                EndGame(false); // Player loses if the timer runs out
             }
         }
     }
 
     void UpdateTimerUI()
     {
-        timerText.text = $"Time Left: {Mathf.Ceil(timer)}";
+        // Update the timer display text
+        if (timerText != null)
+            timerText.text = $"Time Left: {Mathf.Ceil(timer)}";
     }
 
     public void StartGame()
     {
+        // Start gameplay
         isGameActive = true;
         SpawnMarbles();
     }
 
     public void SpawnMarbles()
     {
-        // Spawn marbles randomly in the marbleSpawnArea
-        for (int i = 0; i < 20; i++) // Adjust number as needed
+        // Spawn marbles randomly in the spawn area
+        for (int i = 0; i < 20; i++) // Adjust the number of marbles as needed
         {
-            Vector3 randomPosition = marbleSpawnArea.position + new Vector3(Random.Range(-1, 1), 0, Random.Range(-1, 1));
+            Vector3 randomPosition = marbleSpawnArea.position + new Vector3(
+                Random.Range(-1, 1), 0, Random.Range(-1, 1));
             Instantiate(marblePrefab, randomPosition, Quaternion.identity);
         }
+    }
+
+    public void UpdatePlayerMarbleCount(int bowlIndex, int count)
+    {
+        // Update player's marble count for a specific bowl
+        playerMarbleCounts[bowlIndex] = count;
+
+        // Check if the player's inputs are correct
+        CheckPlayerInput();
+    }
+
+    public void CheckPlayerInput()
+    {
+        // Check if all bowls have the correct number of marbles
+        for (int i = 0; i < bowls.Length; i++)
+        {
+            if (playerMarbleCounts[i] != correctMarbleCounts[i])
+            {
+                return; // If any bowl is incorrect, don't end the game
+            }
+        }
+
+        // If all bowls are correct, the player wins
+        EndGame(true);
     }
 
     public void EndGame(bool didWin)
@@ -61,28 +125,31 @@ public class GameManager : MonoBehaviour
 
         if (didWin)
         {
-            Debug.Log("You Win!");
+            ShowSuccessUI();
         }
         else
         {
-            Debug.Log("Time's Up! You Lose!");
+            Debug.Log("Time's up! You lost.");
+            // Optionally, show a "You Lost" UI here
         }
-
-        // Show UI for restart/menu
     }
 
-    public void CheckPlayerInput()
+    private void ShowSuccessUI()
     {
-        bool isCorrect = true;
-        for (int i = 0; i < bowls.Length; i++)
+        if (successUI != null)
         {
-            if (playerMarbleCounts[i] != correctMarbleCounts[i])
-            {
-                isCorrect = false;
-                break;
-            }
+            successUI.SetActive(true); // Display the success UI
         }
 
-        EndGame(isCorrect);
+        if (successMessage != null)
+        {
+            successMessage.text = "Nice memorization skills!";
+        }
+    }
+
+    public void GoToNextLevel()
+    {
+        // Load the next scene (adjust the build index or scene name as needed)
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }
