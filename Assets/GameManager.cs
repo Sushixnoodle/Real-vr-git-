@@ -22,9 +22,9 @@ public class GameManager : MonoBehaviour
     private int[] playerMarbleCounts; // Player's marble counts for each bowl
 
     // Success UI variables
-    public GameObject successUI;            // UI to show when the player wins
-    public TextMeshProUGUI successMessage;  // Text to display success message
-    public Button nextLevelButton;          // Button to go to the next level
+    public GameObject successPanel;      // Public panel for the success message
+    public TextMeshProUGUI successText;  // Text component for success message
+    public Button nextLevelButton;       // Button for going to the next level
 
     void Awake()
     {
@@ -43,9 +43,9 @@ public class GameManager : MonoBehaviour
         playerMarbleCounts = new int[bowls.Length];
         timer = levelTime;
 
-        // Ensure success UI is hidden initially
-        if (successUI != null)
-            successUI.SetActive(false);
+        // Ensure success panel is hidden initially
+        if (successPanel != null)
+            successPanel.SetActive(false);
 
         // Attach button functionality
         if (nextLevelButton != null)
@@ -125,25 +125,22 @@ public class GameManager : MonoBehaviour
 
         if (didWin)
         {
-            ShowSuccessUI();
+            // Show the success panel
+            if (successPanel != null)
+            {
+                successPanel.SetActive(true); // Enable the success UI
+            }
+
+            //* Set the success message
+            if (successText != null)
+            {
+                successText.text = "Nice memorization skills!";
+            }
         }
         else
         {
             Debug.Log("Time's up! You lost.");
             // Optionally, show a "You Lost" UI here
-        }
-    }
-
-    private void ShowSuccessUI()
-    {
-        if (successUI != null)
-        {
-            successUI.SetActive(true); // Display the success UI
-        }
-
-        if (successMessage != null)
-        {
-            successMessage.text = "Nice memorization skills!";
         }
     }
 
