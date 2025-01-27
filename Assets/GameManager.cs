@@ -26,6 +26,11 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI successText;  // Text component for success message
     public Button nextLevelButton;       // Button for going to the next level
 
+    // Game Over UI variables
+    public GameObject gameOverPanel;     // Public panel for the game over message
+    public Button retryButton;           // Button for retrying the level
+    public Button menuButton;            // Button for returning to the main menu
+
     void Awake()
     {
         // Singleton implementation
@@ -43,13 +48,21 @@ public class GameManager : MonoBehaviour
         playerMarbleCounts = new int[bowls.Length];
         timer = levelTime;
 
-        // Ensure success panel is hidden initially
+        // Ensure success and game over panels are hidden initially
         if (successPanel != null)
             successPanel.SetActive(false);
+        if (gameOverPanel != null)
+            gameOverPanel.SetActive(false);
 
         // Attach button functionality
         if (nextLevelButton != null)
             nextLevelButton.onClick.AddListener(GoToNextLevel);
+
+        if (retryButton != null)
+            retryButton.onClick.AddListener(RetryLevel);
+
+        if (menuButton != null)
+            menuButton.onClick.AddListener(GoToMainMenu);
 
         // Start the game
         StartGame();
@@ -131,7 +144,7 @@ public class GameManager : MonoBehaviour
                 successPanel.SetActive(true); // Enable the success UI
             }
 
-            //* Set the success message
+            // Set the success message
             if (successText != null)
             {
                 successText.text = "Nice memorization skills!";
@@ -139,9 +152,24 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Time's up! You lost.");
-            // Optionally, show a "You Lost" UI here
+            // Show the game over panel
+            if (gameOverPanel != null)
+            {
+                gameOverPanel.SetActive(true); // Enable the game over UI
+            }
         }
+    }
+
+    public void RetryLevel()
+    {
+        // Reload the current scene
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void GoToMainMenu()
+    {
+        // Load the main menu scene (adjust the scene name as needed)
+        SceneManager.LoadScene("MainMenu");
     }
 
     public void GoToNextLevel()
