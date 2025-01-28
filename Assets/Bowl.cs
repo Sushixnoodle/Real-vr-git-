@@ -11,7 +11,7 @@ public class Bowl : MonoBehaviour
         {
             marbleCount++;
             GameManager.Instance.UpdatePlayerMarbleCount(bowlIndex, marbleCount);
-          //  Destroy(other.gameObject); // Optionally destroy the marble
+            Destroy(other.gameObject); // Optionally destroy the marble
         }
     }
 }
