@@ -639,6 +639,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bowlIndex: 1
+  requiredMaterial: {fileID: 2100000, guid: 00e5e69d8a845ea46806a92c140d838f, type: 2}
 --- !u!4 &153312384 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ddc91465e0cda0644af9ec9ddf1517e3, type: 3}
@@ -2341,7 +2342,13 @@ MonoBehaviour:
   - {fileID: 1450864059}
   marblePrefab: {fileID: 4677460306902176890}
   marbleSpawnArea: {fileID: 1718562610}
-  correctMarbleCounts: 010000000200000001000000
+  correctMarbleCounts: 010000000100000001000000
+  redMarbleCount: 1
+  blueMarbleCount: 1
+  greenMarbleCount: 1
+  redMaterial: {fileID: 2100000, guid: e071ee044ba80c547957508ee11729c5, type: 2}
+  blueMaterial: {fileID: 2100000, guid: 00e5e69d8a845ea46806a92c140d838f, type: 2}
+  greenMaterial: {fileID: 2100000, guid: c670ed7ed89dec44ab551500fe3c5f90, type: 2}
   successPanel: {fileID: 972010509}
   successText: {fileID: 0}
   nextLevelButton: {fileID: 1372247342}
@@ -3845,6 +3852,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bowlIndex: 2
+  requiredMaterial: {fileID: 2100000, guid: e071ee044ba80c547957508ee11729c5, type: 2}
 --- !u!4 &1450864064 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ddc91465e0cda0644af9ec9ddf1517e3, type: 3}
@@ -4294,6 +4302,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bowlIndex: 0
+  requiredMaterial: {fileID: 2100000, guid: c670ed7ed89dec44ab551500fe3c5f90, type: 2}
 --- !u!4 &1602715696 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ddc91465e0cda0644af9ec9ddf1517e3, type: 3}
