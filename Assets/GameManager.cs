@@ -100,7 +100,7 @@ public class GameManager : MonoBehaviour
     public void SpawnMarbles()
     {
         // Spawn marbles randomly in the spawn area
-        for (int i = 0; i < 3; i++) // Adjust the number of marbles as needed
+        for (int i = 0; i < 4; i++) // Adjust the number of marbles as needed
         {
             Vector3 randomPosition = marbleSpawnArea.position + new Vector3(
                 Random.Range(0, 0), 0, Random.Range(0, 0));
