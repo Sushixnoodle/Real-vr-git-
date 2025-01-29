@@ -8,28 +8,28 @@ public class GameManager : MonoBehaviour
     // Singleton instance
     public static GameManager Instance { get; private set; }
 
-    // Timer and gameplay variables
-    public TextMeshProUGUI timerText; // Timer display
-    public float levelTime = 30f;     // Total time for the level
+    
+    public TextMeshProUGUI timerText; 
+    public float levelTime = 30f;     
     private float timer;
     private bool isGameActive = false;
 
     // Bowl and marble variables
     public GameObject[] bowls;        // Array of bowl objects
-    public GameObject marblePrefab;   // Prefab for the marble
-    public Transform marbleSpawnArea; // Area where marbles will spawn
+    public GameObject marblePrefab;   
+    public Transform marbleSpawnArea; 
     public int[] correctMarbleCounts; // Target marble counts for each bowl
     private int[] playerMarbleCounts; // Player's marble counts for each bowl
 
     // Success UI variables
-    public GameObject successPanel;      // Public panel for the success message
-    public TextMeshProUGUI successText;  // Text component for success message
-    public Button nextLevelButton;       // Button for going to the next level
+    public GameObject successPanel;      
+    public TextMeshProUGUI successText;  
+    public Button nextLevelButton;       
 
     // Game Over UI variables
-    public GameObject gameOverPanel;     // Public panel for the game over message
-    public Button retryButton;           // Button for retrying the level
-    public Button menuButton;            // Button for returning to the main menu
+    public GameObject gameOverPanel;     
+    public Button retryButton;           
+    public Button menuButton;            
 
     void Awake()
     {
@@ -64,13 +64,13 @@ public class GameManager : MonoBehaviour
         if (menuButton != null)
             menuButton.onClick.AddListener(GoToMainMenu);
 
-        // Start the game
+        
         StartGame();
     }
 
     void Update()
     {
-        // Update timer during active gameplay
+        
         if (isGameActive)
         {
             timer -= Time.deltaTime;
@@ -78,21 +78,21 @@ public class GameManager : MonoBehaviour
 
             if (timer <= 0)
             {
-                EndGame(false); // Player loses if the timer runs out
+                EndGame(false); 
             }
         }
     }
 
     void UpdateTimerUI()
     {
-        // Update the timer display text
+        
         if (timerText != null)
             timerText.text = $"Time Left: {Mathf.Ceil(timer)}";
     }
 
     public void StartGame()
     {
-        // Start gameplay
+        
         isGameActive = true;
         SpawnMarbles();
     }
@@ -100,7 +100,7 @@ public class GameManager : MonoBehaviour
     public void SpawnMarbles()
     {
         // Spawn marbles randomly in the spawn area
-        for (int i = 0; i < 4; i++) // Adjust the number of marbles as needed
+        for (int i = 0; i < 6; i++) // Adjust the number of marbles as needed
         {
             Vector3 randomPosition = marbleSpawnArea.position + new Vector3(
                 Random.Range(0, 0), 0, Random.Range(0, 0));
@@ -138,7 +138,7 @@ public class GameManager : MonoBehaviour
 
         if (didWin)
         {
-            // Show the success panel
+            
             if (successPanel != null)
             {
                 successPanel.SetActive(true); // Enable the success UI
@@ -168,7 +168,7 @@ public class GameManager : MonoBehaviour
 
     public void GoToMainMenu()
     {
-        // Load the main menu scene (adjust the scene name as needed)
+        //(adjust the scene name as needed)
         SceneManager.LoadScene("MainMenu");
     }
 
