@@ -975,6 +975,7 @@ GameObject:
   - component: {fileID: 823547344}
   - component: {fileID: 823547343}
   - component: {fileID: 823547342}
+  - component: {fileID: 823547345}
   m_Layer: 0
   m_Name: Play
   m_TagString: Untagged
@@ -1045,9 +1046,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: VRButton, Assembly-CSharp
-        m_MethodName: GoToNextScene
+      - m_Target: {fileID: 823547345}
+        m_TargetAssemblyTypeName: VRButtonSceneLoader, Assembly-CSharp
+        m_MethodName: LoadScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1095,6 +1096,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 823547339}
   m_CullTransparentMesh: 1
+--- !u!114 &823547345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 823547339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 720f439feaae2854dab28865499f20ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneToLoad: BeforeOne
 --- !u!1 &921163958
 GameObject:
   m_ObjectHideFlags: 0
