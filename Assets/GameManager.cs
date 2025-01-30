@@ -89,6 +89,9 @@ public class GameManager : MonoBehaviour
         SpawnMarbles();
     }
 
+    public Vector3 spawnLocation = new Vector3(1.1923f, 1.1690f, 2.9652f); // Set default spawn position
+    public float spawnRange = 0.1f; // Small random offset so marbles don’t stack perfectly
+
     public void SpawnMarbles()
     {
         SpawnMarbleGroup(redMarbleCount, redMaterial);
@@ -100,11 +103,18 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 0; i < count; i++)
         {
-            Vector3 spawnPosition = marbleSpawnArea.position + new Vector3(
-                Random.Range(-1, 1), 0, Random.Range(-1, 1));
+            // ✅ Generate a small random offset so marbles don’t stack exactly on each other
+            Vector3 randomOffset = new Vector3(
+                Random.Range(-spawnRange, spawnRange),
+                Random.Range(-spawnRange / 2, spawnRange / 2), // Smaller Y offset to prevent floating
+                Random.Range(-spawnRange, spawnRange)
+            );
+
+            Vector3 spawnPosition = spawnLocation + randomOffset;
 
             GameObject marble = Instantiate(marblePrefab, spawnPosition, Quaternion.identity);
 
+            // ✅ Assign correct color to the marble
             Renderer marbleRenderer = marble.GetComponent<Renderer>();
             if (marbleRenderer != null)
             {
@@ -112,6 +122,7 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+
 
     public void UpdatePlayerMarbleCount(int bowlIndex, int count)
     {
