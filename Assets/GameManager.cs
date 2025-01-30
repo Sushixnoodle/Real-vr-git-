@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
@@ -115,19 +115,29 @@ public class GameManager : MonoBehaviour
 
     public void UpdatePlayerMarbleCount(int bowlIndex, int count)
     {
+        Debug.Log($"⚠️ Updating Bowl {bowlIndex}: New Count = {count}");
+
         playerMarbleCounts[bowlIndex] = count;
         CheckPlayerInput();
     }
 
+
     public void CheckPlayerInput()
     {
+        Debug.Log("🔍 Checking Player Input...");
+
         for (int i = 0; i < bowls.Length; i++)
         {
+            Debug.Log($"⚠️ Bowl {i}: Player Count = {playerMarbleCounts[i]}, Required Count = {correctMarbleCounts[i]}");
+
             if (playerMarbleCounts[i] != correctMarbleCounts[i])
             {
+                Debug.Log($"❌ Bowl {i} is incorrect. Game continues.");
                 return;
             }
         }
+
+        Debug.Log("🎉 ALL BOWLS CORRECT! TRIGGERING SUCCESS!");
         EndGame(true);
     }
 

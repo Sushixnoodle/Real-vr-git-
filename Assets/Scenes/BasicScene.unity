@@ -639,7 +639,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bowlIndex: 1
-  requiredMaterial: {fileID: 2100000, guid: 00e5e69d8a845ea46806a92c140d838f, type: 2}
+  requiredMaterial: {fileID: 2100000, guid: 247e2b228910b794bbcb4b04a865d3ba, type: 2}
 --- !u!4 &153312384 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ddc91465e0cda0644af9ec9ddf1517e3, type: 3}
@@ -2062,6 +2062,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: ddc91465e0cda0644af9ec9ddf1517e3, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c374da91da41c9f4bad30d45196967ef, type: 2}
     - target: {fileID: 919132149155446097, guid: ddc91465e0cda0644af9ec9ddf1517e3, type: 3}
       propertyPath: m_Name
       value: Bowl 1 (2)
@@ -2346,9 +2350,9 @@ MonoBehaviour:
   redMarbleCount: 1
   blueMarbleCount: 1
   greenMarbleCount: 1
-  redMaterial: {fileID: 2100000, guid: e071ee044ba80c547957508ee11729c5, type: 2}
-  blueMaterial: {fileID: 2100000, guid: 00e5e69d8a845ea46806a92c140d838f, type: 2}
-  greenMaterial: {fileID: 2100000, guid: c670ed7ed89dec44ab551500fe3c5f90, type: 2}
+  redMaterial: {fileID: 2100000, guid: c374da91da41c9f4bad30d45196967ef, type: 2}
+  blueMaterial: {fileID: 2100000, guid: 247e2b228910b794bbcb4b04a865d3ba, type: 2}
+  greenMaterial: {fileID: 2100000, guid: 444e8a4329846a14298d12c87a4a1807, type: 2}
   successPanel: {fileID: 972010509}
   successText: {fileID: 0}
   nextLevelButton: {fileID: 1372247342}
@@ -3852,7 +3856,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bowlIndex: 2
-  requiredMaterial: {fileID: 2100000, guid: e071ee044ba80c547957508ee11729c5, type: 2}
+  requiredMaterial: {fileID: 2100000, guid: c374da91da41c9f4bad30d45196967ef, type: 2}
 --- !u!4 &1450864064 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ddc91465e0cda0644af9ec9ddf1517e3, type: 3}
@@ -4251,6 +4255,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: ddc91465e0cda0644af9ec9ddf1517e3, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 444e8a4329846a14298d12c87a4a1807, type: 2}
     - target: {fileID: 919132149155446097, guid: ddc91465e0cda0644af9ec9ddf1517e3, type: 3}
       propertyPath: m_Name
       value: Bowl 1
@@ -4302,7 +4310,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bowlIndex: 0
-  requiredMaterial: {fileID: 2100000, guid: c670ed7ed89dec44ab551500fe3c5f90, type: 2}
+  requiredMaterial: {fileID: 2100000, guid: 444e8a4329846a14298d12c87a4a1807, type: 2}
 --- !u!4 &1602715696 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ddc91465e0cda0644af9ec9ddf1517e3, type: 3}
@@ -4485,6 +4493,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: ddc91465e0cda0644af9ec9ddf1517e3, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 247e2b228910b794bbcb4b04a865d3ba, type: 2}
     - target: {fileID: 919132149155446097, guid: ddc91465e0cda0644af9ec9ddf1517e3, type: 3}
       propertyPath: m_Name
       value: Bowl 1 (1)

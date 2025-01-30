@@ -1,49 +1,53 @@
 ﻿using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit.Interactables;
+using System.Collections.Generic; // Needed for tracking marbles
 
 public class Bowl : MonoBehaviour
 {
-    public int bowlIndex; // Assigned in the Inspector
-    public Material requiredMaterial; // Assign the correct material (Red, Blue, Green) in Inspector
+    public int bowlIndex;
+    public Material requiredMaterial; // Assign Red, Blue, or Green in the Inspector
 
-    private int marbleCount = 0; // Tracks the number of marbles in this bowl
+    private HashSet<GameObject> countedMarbles = new HashSet<GameObject>(); // Prevents duplicate counting
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Marble")) // Ensure the object is a marble
+        if (other.CompareTag("Marble"))
         {
             Renderer marbleRenderer = other.GetComponent<Renderer>();
 
-            // Ensure the marble has a renderer and material
             if (marbleRenderer != null && requiredMaterial != null)
             {
-                // ✅ Compare the material's color instead of the material itself
+                // ✅ Compare color instead of material instance
                 if (marbleRenderer.material.color == requiredMaterial.color)
                 {
-                    marbleCount++;
-                    Debug.Log($"✅ Bowl {bowlIndex}: Correct Marble Added. Total = {marbleCount}");
-
-                    // Notify GameManager that the correct marble was added
-                    GameManager.Instance.UpdatePlayerMarbleCount(bowlIndex, marbleCount);
-
-                    // Prevent the marble from moving after being placed
-                    Rigidbody marbleRigidbody = other.GetComponent<Rigidbody>();
-                    if (marbleRigidbody != null)
+                    // ✅ Check if marble has already been counted
+                    if (!countedMarbles.Contains(other.gameObject))
                     {
-                        marbleRigidbody.isKinematic = true; // Stops movement
-                    }
+                        countedMarbles.Add(other.gameObject);
+                        Debug.Log($"✅ Bowl {bowlIndex}: Correct Marble Added. Current Count = {countedMarbles.Count}");
 
-                    // Prevent grabbing again (if using XR)
-                    var grabInteractable = other.GetComponent<XRGrabInteractable>();
-                    if (grabInteractable != null)
-                    {
-                        grabInteractable.enabled = false; // Prevents picking it up again
+                        // ✅ Update GameManager
+                        GameManager.Instance.UpdatePlayerMarbleCount(bowlIndex, countedMarbles.Count);
                     }
                 }
                 else
                 {
-                    Debug.Log($"❌ Incorrect Marble in Bowl {bowlIndex}! Expected {requiredMaterial.name}, but got {marbleRenderer.material.name}");
+                    Debug.Log($"❌ Bowl {bowlIndex}: Wrong Color! Expected {requiredMaterial.color}, but got {marbleRenderer.material.color}");
                 }
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Marble"))
+        {
+            if (countedMarbles.Contains(other.gameObject))
+            {
+                countedMarbles.Remove(other.gameObject);
+                Debug.Log($"⚠️ Bowl {bowlIndex}: Marble Removed. Current Count = {countedMarbles.Count}");
+
+                // ✅ Update GameManager to reflect marble removal
+                GameManager.Instance.UpdatePlayerMarbleCount(bowlIndex, countedMarbles.Count);
             }
         }
     }
