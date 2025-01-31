@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 public class GameManager : MonoBehaviour
 {
@@ -135,6 +136,13 @@ public class GameManager : MonoBehaviour
 
     public void CheckPlayerInput()
     {
+        // ✅ Prevent checking for success if the game is already over
+        if (!isGameActive)
+        {
+            Debug.Log("🛑 Game is over. Ignoring player input.");
+            return;
+        }
+
         Debug.Log("🔍 Checking Player Input...");
 
         for (int i = 0; i < bowls.Length; i++)
@@ -152,20 +160,59 @@ public class GameManager : MonoBehaviour
         EndGame(true);
     }
 
+
     public void EndGame(bool didWin)
     {
         isGameActive = false;
 
+        // ✅ Disable all marbles so they can't be moved
+        DisableAllMarbles();
+
         if (didWin)
         {
-            if (successPanel != null) successPanel.SetActive(true);
-            if (successText != null) successText.text = "Nice memorization skills!";
+            Debug.Log("🎉 SUCCESS: Player won! Showing success panel.");
+
+            if (successPanel != null)
+            {
+                successPanel.SetActive(true);
+                Debug.Log("✅ SUCCESS PANEL ACTIVATED!");
+            }
         }
         else
         {
-            if (gameOverPanel != null) gameOverPanel.SetActive(true);
+            Debug.Log("❌ GAME OVER: Timer ran out. Showing game over panel...");
+
+            if (gameOverPanel != null)
+            {
+                gameOverPanel.SetActive(true);
+                Debug.Log("✅ GAME OVER PANEL ACTIVATED!");
+            }
         }
     }
+
+    // ✅ Disable all marbles in the scene so they can't be moved after game ends
+    void DisableAllMarbles()
+    {
+        GameObject[] marbles = GameObject.FindGameObjectsWithTag("Marble");
+
+        foreach (GameObject marble in marbles)
+        {
+            Rigidbody rb = marble.GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                rb.isKinematic = true; // Stop movement
+            }
+
+            var grabInteractable = marble.GetComponent<XRGrabInteractable>();
+            if (grabInteractable != null)
+            {
+                grabInteractable.enabled = false; // Disable grabbing
+            }
+        }
+
+        Debug.Log("🛑 All marbles are now disabled!");
+    }
+
 
     public void RetryLevel()
     {
