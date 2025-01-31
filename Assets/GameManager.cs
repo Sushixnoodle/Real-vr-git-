@@ -104,18 +104,24 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 0; i < count; i++)
         {
-            // ✅ Generate a small random offset so marbles don’t stack exactly on each other
-            Vector3 randomOffset = new Vector3(
-                Random.Range(-spawnRange, spawnRange),
-                Random.Range(-spawnRange / 2, spawnRange / 2), // Smaller Y offset to prevent floating
-                Random.Range(-spawnRange, spawnRange)
+            // ✅ Ensure marbles spawn inside the plate with minimal height offset
+            Vector3 spawnPosition = new Vector3(1.1923f, 1.1690f, 2.9652f) + new Vector3(
+                Random.Range(-0.05f, 0.05f), // Small X offset to avoid stacking
+                0.02f, // Very small Y offset to prevent bouncing
+                Random.Range(-0.05f, 0.05f)  // Small Z offset to spread marbles
             );
-
-            Vector3 spawnPosition = spawnLocation + randomOffset;
 
             GameObject marble = Instantiate(marblePrefab, spawnPosition, Quaternion.identity);
 
-            // ✅ Assign correct color to the marble
+            // ✅ Ensure no movement forces are applied
+            Rigidbody rb = marble.GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                rb.velocity = Vector3.zero; // Reset movement
+                rb.angularVelocity = Vector3.zero; // Stop rolling
+            }
+
+            // ✅ Assign the correct material to the marble
             Renderer marbleRenderer = marble.GetComponent<Renderer>();
             if (marbleRenderer != null)
             {
@@ -123,6 +129,7 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+
 
 
     public void UpdatePlayerMarbleCount(int bowlIndex, int count)
